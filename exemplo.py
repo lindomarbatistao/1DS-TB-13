@@ -17,7 +17,7 @@ class Ecommerce:
             op = int(input('Escolha uma opção: '))
             match op:
                 case 1:
-                    self.create()
+                    self.menu_create()
                 case 2:
                     print('Read')
                 case 3:
@@ -29,10 +29,38 @@ class Ecommerce:
                 case _:
                     print('Opção inválida.')
     
-    def create(self, tituloProduto, preco, descricao, imagemProduto,
+    def create(self, titulo, preco, descricao, imagemProduto,
                categoriaProduto, classProduto, exibirHome):
         cursor = self.conn.cursor()
-        
+        cursor.execute("""
+            INSERT INTO api_produto (tituloProduto, preco, descricao, imagemProduto,
+               categoriaProduto, classProduto, exibirHome)
+            VALUES(?,?,?,?,?,?,?)""",
+                (titulo, preco, descricao, imagemProduto,
+               categoriaProduto, classProduto, exibirHome))
+        self.conn.commit()
+        print('Produto cadastrado com sucesso!!!')
+    
+    def menu_create(self):
+        print(
+            '\n'
+            '[1]-Título\n'
+            '[2]-Preço\n'
+            '[3]-Descrição\n'
+            '[4]-Imagem\n'
+            '[5]-Categoria\n'
+            '[6]-Classificação\n'
+            '[7]-Exibir\n'
+        )
+        titulo = input("Título: ")
+        preco = float(input('Preço: '))
+        descricao = input("Descrição: ")
+        imagemProduto = input("Imagem: ")
+        categoriaProduto = input("Categoria: ")
+        classProduto = input("Classificação: ")
+        exibirHome = input("Exibir(True, False): ")
+        self.create(titulo, preco, descricao, imagemProduto,
+               categoriaProduto, classProduto, exibirHome)
 
 
 ecommerce = Ecommerce()

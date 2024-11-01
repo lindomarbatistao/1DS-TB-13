@@ -6,7 +6,6 @@ class ProdutoSerializer(serializers.ModelSerializer):
         model = Produto
         fields = [
            'id',
-           'codigoProduto',
            'tituloProduto',
            'preco',
            'descricao',
